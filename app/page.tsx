@@ -1,95 +1,69 @@
+"use client"
+import { useQueryFetch } from '@/hooks/useFetch'
+import { Grid, Typography } from '@mui/material'
+import axios from 'axios'
 import Image from 'next/image'
-import styles from './page.module.css'
+import { useEffect, useState } from 'react'
+// import styles from './page.module.css'
+
 
 export default function Home() {
+
+  const [fetchedData, setFetchedData] = useState([])
+
+
+
+
+  useEffect(() => {
+    axios.get('https://jsonplaceholder.typicode.com/posts').then((res) => {
+      setFetchedData(res.data)
+    }
+
+    )
+  }, []
+  )
+
+  console.log("zcmvkfv", fetchedData);
+
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <Grid container bgcolor='' sx={{
+      justifyContent: 'center'
+    }}>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {
+        fetchedData.map((data: any, index: any) =>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+          <Grid container lg={5} sx={{
+            m: 2, justifyContent: 'center', alignItems: 'center',
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px', borderRadius: 3, cursor: 'pointer'
+          }} >
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+            <Typography sx={{
+              my: 2, textAlign: 'center',
+              width: '100%',
+              fontWeight: 'bold',
+              fontSize: 21
+            }}>
+              {data.title}
+            </Typography>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+            <Typography sx={{
+              width: '80%', textAlign: 'center', my: 2.5,
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+            }}>
+              {data.body}
+            </Typography>
+
+          </Grid>
+        )
+      }
+
+
+
+
+
+
+    </Grid>
   )
 }
